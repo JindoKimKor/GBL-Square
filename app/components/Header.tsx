@@ -22,10 +22,10 @@ export default function Header() {
         {/* Navigation menu */}
         <ul className="hidden md:flex items-center gap-8 list-none">
           <li>
-            <Link href="/product" className="flex items-center gap-1">
+            <span className="flex items-center gap-1">
               Product
               <FaChevronDown className="w-3 h-3" aria-hidden="true" />
-            </Link>
+            </span>
           </li>
           <li>
             <Link href="/pricing">Pricing</Link>
