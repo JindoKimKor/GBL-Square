@@ -23,6 +23,7 @@ export default function Footer() {
           <div className="grid grid-cols-4 gap-8 md:col-span-4">
             {/* Product column */}
             <div className="flex flex-col gap-2">
+              <h3 className="font-semibold text-gray-900">Product</h3>
               <Link href="/features">Features</Link>
               <Link href="/pricing">Pricing</Link>
               <Link href="/changelog">Changelog</Link>
@@ -31,6 +32,7 @@ export default function Footer() {
 
             {/* Resources column */}
             <div className="flex flex-col gap-2">
+              <h3 className="font-semibold text-gray-900">Resources</h3>
               <Link href="/documentation">Documentation</Link>
               <Link href="/api-reference">API Reference</Link>
               <Link href="/tutorials">Tutorials</Link>
@@ -39,6 +41,7 @@ export default function Footer() {
 
             {/* Community column */}
             <div className="flex flex-col gap-2">
+              <h3 className="font-semibold text-gray-900">Community</h3>
               <Link href="/discord">Discord</Link>
               <Link href="/github">GitHub</Link>
               <Link href="/twitter">Twitter</Link>
@@ -47,6 +50,7 @@ export default function Footer() {
 
             {/* Company column */}
             <div className="flex flex-col gap-2">
+              <h3 className="font-semibold text-gray-900">Company</h3>
               <Link href="/about">About</Link>
               <Link href="/careers">Careers</Link>
               <Link href="/privacy">Privacy</Link>
