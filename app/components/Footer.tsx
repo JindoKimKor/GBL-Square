@@ -61,7 +61,9 @@ export default function Footer() {
 
         {/* Bottom row container */}
         <div className="flex items-center justify-between">
-          {/* Bottom row content will go here */}
+          <p className="text-gray-600">
+            © 2025 GBL-Square. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
