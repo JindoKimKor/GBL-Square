@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <footer>
@@ -19,8 +21,22 @@ export default function Footer() {
 
           {/* Four-column grid structure */}
           <div className="grid grid-cols-4 gap-8 md:col-span-4">
-            <div>{/* Product column */}</div>
-            <div>{/* Resources column */}</div>
+            {/* Product column */}
+            <div className="flex flex-col gap-2">
+              <Link href="/features">Features</Link>
+              <Link href="/pricing">Pricing</Link>
+              <Link href="/changelog">Changelog</Link>
+              <Link href="/roadmap">Roadmap</Link>
+            </div>
+
+            {/* Resources column */}
+            <div className="flex flex-col gap-2">
+              <Link href="/documentation">Documentation</Link>
+              <Link href="/api-reference">API Reference</Link>
+              <Link href="/tutorials">Tutorials</Link>
+              <Link href="/blog">Blog</Link>
+            </div>
+
             <div>{/* Community column */}</div>
             <div>{/* Company column */}</div>
           </div>
