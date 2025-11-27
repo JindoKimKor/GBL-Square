@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer className="bg-gray-50 py-12">
-      <div className="container">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Top section with logo and tagline */}
           <div className="flex flex-col gap-2">
@@ -140,11 +140,11 @@ export default function Footer() {
         </div>
 
         {/* Bottom row container */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-start md:justify-between gap-4 md:gap-0 mt-8 pt-8 border-t border-gray-200">
           <p className="text-gray-600">
             © 2025 GBL-Square. All rights reserved.
           </p>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
             <Link
               href="/privacy"
               className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
