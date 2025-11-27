@@ -19,7 +19,10 @@ export default function Header() {
         {/* Navigation menu */}
         <ul className="hidden md:flex items-center gap-8 list-none">
           <li>
-            <span>Product</span>
+            <span className="flex items-center gap-1">
+              Product
+              <span className="text-xs">▼</span>
+            </span>
           </li>
           <li>
             <span>Pricing</span>
