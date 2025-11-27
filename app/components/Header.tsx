@@ -50,9 +50,13 @@ export default function Header() {
           >
             Login
           </Link>
-          <button type="button" aria-label="Sign up">
+          <Link
+            href="/signup"
+            className="px-4 py-2 bg-[#0066FF] text-white rounded-md hover:bg-[#0052CC] transition-colors duration-200 font-medium"
+            aria-label="Sign up"
+          >
             Sign up
-          </button>
+          </Link>
         </div>
       </nav>
     </header>
