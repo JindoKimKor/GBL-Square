@@ -58,6 +58,11 @@ export default function Footer() {
             </div>
           </div>
         </div>
+
+        {/* Bottom row container */}
+        <div className="flex items-center justify-between">
+          {/* Bottom row content will go here */}
+        </div>
       </div>
     </footer>
   );
