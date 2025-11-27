@@ -44,9 +44,12 @@ export default function Header() {
           role="group"
           aria-label="User actions"
         >
-          <button type="button" aria-label="Login">
+          <Link
+            href="/login"
+            className="text-gray-700 hover:text-gray-900 hover:underline transition-colors duration-200"
+          >
             Login
-          </button>
+          </Link>
           <button type="button" aria-label="Sign up">
             Sign up
           </button>
