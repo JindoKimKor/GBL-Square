@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b-[2.5px] border-[#dbe0e5] bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
@@ -19,19 +21,19 @@ export default function Header() {
         {/* Navigation menu */}
         <ul className="hidden md:flex items-center gap-8 list-none">
           <li>
-            <span className="flex items-center gap-1">
+            <Link href="/product" className="flex items-center gap-1">
               Product
               <span className="text-xs">▼</span>
-            </span>
+            </Link>
           </li>
           <li>
-            <span>Pricing</span>
+            <Link href="/pricing">Pricing</Link>
           </li>
           <li>
-            <span>Documentation</span>
+            <Link href="/documentation">Documentation</Link>
           </li>
           <li>
-            <span>Blog</span>
+            <Link href="/blog">Blog</Link>
           </li>
         </ul>
 
