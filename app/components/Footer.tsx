@@ -64,6 +64,20 @@ export default function Footer() {
           <p className="text-gray-600">
             © 2025 GBL-Square. All rights reserved.
           </p>
+          <div className="flex items-center gap-6">
+            <Link href="/privacy" className="text-gray-600 hover:text-gray-900">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="text-gray-600 hover:text-gray-900">
+              Terms of Service
+            </Link>
+            <Link
+              href="/cookie-settings"
+              className="text-gray-600 hover:text-gray-900"
+            >
+              Cookie Settings
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
