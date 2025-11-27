@@ -24,37 +24,117 @@ export default function Footer() {
             {/* Product column */}
             <div className="flex flex-col gap-2">
               <h3 className="font-semibold text-gray-900">Product</h3>
-              <Link href="/features">Features</Link>
-              <Link href="/pricing">Pricing</Link>
-              <Link href="/changelog">Changelog</Link>
-              <Link href="/roadmap">Roadmap</Link>
+              <Link
+                href="/features"
+                className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
+              >
+                Features
+              </Link>
+              <Link
+                href="/pricing"
+                className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
+              >
+                Pricing
+              </Link>
+              <Link
+                href="/changelog"
+                className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
+              >
+                Changelog
+              </Link>
+              <Link
+                href="/roadmap"
+                className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
+              >
+                Roadmap
+              </Link>
             </div>
 
             {/* Resources column */}
             <div className="flex flex-col gap-2">
               <h3 className="font-semibold text-gray-900">Resources</h3>
-              <Link href="/documentation">Documentation</Link>
-              <Link href="/api-reference">API Reference</Link>
-              <Link href="/tutorials">Tutorials</Link>
-              <Link href="/blog">Blog</Link>
+              <Link
+                href="/documentation"
+                className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
+              >
+                Documentation
+              </Link>
+              <Link
+                href="/api-reference"
+                className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
+              >
+                API Reference
+              </Link>
+              <Link
+                href="/tutorials"
+                className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
+              >
+                Tutorials
+              </Link>
+              <Link
+                href="/blog"
+                className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
+              >
+                Blog
+              </Link>
             </div>
 
             {/* Community column */}
             <div className="flex flex-col gap-2">
               <h3 className="font-semibold text-gray-900">Community</h3>
-              <Link href="/discord">Discord</Link>
-              <Link href="/github">GitHub</Link>
-              <Link href="/twitter">Twitter</Link>
-              <Link href="/support">Support</Link>
+              <Link
+                href="/discord"
+                className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
+              >
+                Discord
+              </Link>
+              <Link
+                href="/github"
+                className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
+              >
+                GitHub
+              </Link>
+              <Link
+                href="/twitter"
+                className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
+              >
+                Twitter
+              </Link>
+              <Link
+                href="/support"
+                className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
+              >
+                Support
+              </Link>
             </div>
 
             {/* Company column */}
             <div className="flex flex-col gap-2">
               <h3 className="font-semibold text-gray-900">Company</h3>
-              <Link href="/about">About</Link>
-              <Link href="/careers">Careers</Link>
-              <Link href="/privacy">Privacy</Link>
-              <Link href="/terms">Terms</Link>
+              <Link
+                href="/about"
+                className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
+              >
+                About
+              </Link>
+              <Link
+                href="/careers"
+                className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
+              >
+                Careers
+              </Link>
+              <Link
+                href="/privacy"
+                className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
+              >
+                Privacy
+              </Link>
+              <Link
+                href="/terms"
+                className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
+              >
+                Terms
+              </Link>
             </div>
           </div>
         </div>
@@ -65,15 +145,21 @@ export default function Footer() {
             © 2025 GBL-Square. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <Link href="/privacy" className="text-gray-600 hover:text-gray-900">
+            <Link
+              href="/privacy"
+              className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
+            >
               Privacy Policy
             </Link>
-            <Link href="/terms" className="text-gray-600 hover:text-gray-900">
+            <Link
+              href="/terms"
+              className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
+            >
               Terms of Service
             </Link>
             <Link
               href="/cookie-settings"
-              className="text-gray-600 hover:text-gray-900"
+              className="text-gray-600 hover:text-gray-900 hover:underline transition-colors"
             >
               Cookie Settings
             </Link>
