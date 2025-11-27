@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FaChevronDown } from "react-icons/fa";
 
 export default function Header() {
   return (
@@ -23,7 +24,7 @@ export default function Header() {
           <li>
             <Link href="/product" className="flex items-center gap-1">
               Product
-              <span className="text-xs">▼</span>
+              <FaChevronDown className="w-3 h-3" aria-hidden="true" />
             </Link>
           </li>
           <li>
