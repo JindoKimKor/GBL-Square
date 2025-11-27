@@ -1,27 +1,49 @@
 export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b-[2.5px] border-[#dbe0e5] bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-      <nav className="flex items-center justify-between px-4 sm:px-6 lg:px-8 h-16">
+      <nav
+        className="flex items-center justify-between px-4 sm:px-6 lg:px-8 h-16"
+        aria-label="Main navigation"
+      >
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-purple-600 rounded flex items-center justify-center">
+          <div
+            className="w-8 h-8 bg-purple-600 rounded flex items-center justify-center"
+            aria-hidden="true"
+          >
             <span className="text-white font-bold text-sm">GB</span>
           </div>
           <span className="text-xl text-gray-900">GBL-Square</span>
         </div>
 
         {/* Navigation menu */}
-        <div className="hidden md:flex items-center gap-8">
-          <span>Product</span>
-          <span>Pricing</span>
-          <span>Documentation</span>
-          <span>Blog</span>
-        </div>
+        <ul className="hidden md:flex items-center gap-8 list-none">
+          <li>
+            <span>Product</span>
+          </li>
+          <li>
+            <span>Pricing</span>
+          </li>
+          <li>
+            <span>Documentation</span>
+          </li>
+          <li>
+            <span>Blog</span>
+          </li>
+        </ul>
 
         {/* Action buttons */}
-        <div className="hidden md:flex items-center gap-6">
-          <span>Login</span>
-          <span>Sign up</span>
+        <div
+          className="hidden md:flex items-center gap-6"
+          role="group"
+          aria-label="User actions"
+        >
+          <button type="button" aria-label="Login">
+            Login
+          </button>
+          <button type="button" aria-label="Sign up">
+            Sign up
+          </button>
         </div>
       </nav>
     </header>
