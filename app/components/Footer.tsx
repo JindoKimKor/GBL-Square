@@ -37,8 +37,21 @@ export default function Footer() {
               <Link href="/blog">Blog</Link>
             </div>
 
-            <div>{/* Community column */}</div>
-            <div>{/* Company column */}</div>
+            {/* Community column */}
+            <div className="flex flex-col gap-2">
+              <Link href="/discord">Discord</Link>
+              <Link href="/github">GitHub</Link>
+              <Link href="/twitter">Twitter</Link>
+              <Link href="/support">Support</Link>
+            </div>
+
+            {/* Company column */}
+            <div className="flex flex-col gap-2">
+              <Link href="/about">About</Link>
+              <Link href="/careers">Careers</Link>
+              <Link href="/privacy">Privacy</Link>
+              <Link href="/terms">Terms</Link>
+            </div>
           </div>
         </div>
       </div>
