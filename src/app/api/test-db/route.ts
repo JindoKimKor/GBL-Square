@@ -1,0 +1,10 @@
+import { prisma } from "@/src/lib/prisma";
+
+export async function GET() {
+  const userCount = await prisma.user.count();
+
+  return Response.json({
+    message: "DB connected",
+    userCount,
+  });
+}
