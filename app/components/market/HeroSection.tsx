@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { getGitHubAuthUrl } from "@/lib/auth/github";
 
 export default function HeroSection() {
   const [email, setEmail] = useState("");
@@ -9,7 +10,8 @@ export default function HeroSection() {
     titleLine1: "CI/CD for Game-Based Learning Contents",
     titleLine2: "& Simulations",
 
-    subtitleLine1: "One tool to build, deploy, and create LMS-interactable content — seamlessly integrated with",
+    subtitleLine1:
+      "One tool to build, deploy, and create LMS-interactable content — seamlessly integrated with",
     subtitleLine2: "Moodle & D2L.",
 
     inputPlaceholder: "Enter your email...",
@@ -39,6 +41,18 @@ export default function HeroSection() {
     }
 
     console.log("Valid email:", email);
+  };
+
+  const handleOAuthLogin = (provider: string) => {
+    switch (provider) {
+      case "GH":
+        window.location.href = getGitHubAuthUrl();
+        break;
+      // case "GL":
+      // case "BB":
+      default:
+        console.log(`${provider} OAuth not implemented yet`);
+    }
   };
 
   return (
@@ -76,11 +90,14 @@ export default function HeroSection() {
           </div>
         </form>
         <div className="flex flex-col items-center mt-4">
-          <p className="text-gray-500 text-sm mb-2">{HERO_TEXT.social.prompt}</p>
+          <p className="text-gray-500 text-sm mb-2">
+            {HERO_TEXT.social.prompt}
+          </p>
           <div className="flex items-center space-x-3">
             {HERO_TEXT.social.providers.map((provider) => (
               <button
                 key={provider}
+                onClick={() => handleOAuthLogin(provider)}
                 className="border px-3 py-1 cursor-pointer rounded-md text-gray-600 hover:bg-gray-100 active:scale-95 transition-all duration-150"
               >
                 {provider}
