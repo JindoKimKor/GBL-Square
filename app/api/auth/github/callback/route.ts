@@ -1,3 +1,9 @@
+// TODO (#55): Add comprehensive error handling and logging
+// - Create error page UI (/auth/error) with user-friendly messages
+// - Add structured logging with timestamps for debugging
+// - Handle specific GitHub OAuth errors (access_denied, redirect_uri_mismatch, etc.)
+// Reference: https://docs.github.com/en/apps/oauth-apps/maintaining-oauth-apps/troubleshooting-oauth-app-access-token-request-errors
+
 import { NextRequest, NextResponse } from "next/server";
 import { extractOAuthParams, createErrorRedirect } from "@/lib/auth/utils";
 import {
@@ -36,9 +42,7 @@ export async function GET(request: NextRequest) {
     });
 
     // Create response with redirect
-    const response = NextResponse.redirect(
-      new URL("/?auth=success", request.url)
-    );
+    const response = NextResponse.redirect(new URL("/", request.url));
 
     // Set HttpOnly cookie
     response.cookies.set("token", token, {

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FaChevronDown } from "react-icons/fa";
+import AuthButtons from "./AuthButtons";
 
 export default function Header() {
   return (
@@ -38,25 +39,13 @@ export default function Header() {
           </li>
         </ul>
 
-        {/* Action buttons */}
+        {/* Action buttons - Client Component */}
         <div
           className="hidden md:flex items-center gap-6"
           role="group"
           aria-label="User actions"
         >
-          <Link
-            href="/login"
-            className="text-gray-700 hover:text-gray-900 hover:underline transition-colors duration-200"
-          >
-            Login
-          </Link>
-          <Link
-            href="/signup"
-            className="px-4 py-2 bg-[#0066FF] text-white rounded-md hover:bg-[#0052CC] transition-colors duration-200 font-medium"
-            aria-label="Sign up"
-          >
-            Sign up
-          </Link>
+          <AuthButtons />
         </div>
       </nav>
     </header>
