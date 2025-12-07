@@ -1,5 +1,7 @@
 import { githubOAuthConfig } from "./config";
-import { GitHubUser } from './types';
+import { GitHubUser } from "./types";
+import { prisma } from "@/lib/prisma";
+import { User } from "@prisma/client";
 
 /**
  * Generate the URL to redirect users to GitHub OAuth authorization page
@@ -54,14 +56,16 @@ export async function exchangeCodeForToken(code: string): Promise<string> {
 
 /**
  * Fetch authenticated user data from GitHub API
- * 
+ *
  * Reference: https://docs.github.com/en/rest/users/users#get-the-authenticated-user
  */
-export async function fetchGitHubUser(accessToken: string): Promise<GitHubUser> {
+export async function fetchGitHubUser(
+  accessToken: string
+): Promise<GitHubUser> {
   const response = await fetch(githubOAuthConfig.userApiUrl, {
     headers: {
-      'Authorization': `Bearer ${accessToken}`,
-      'Accept': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+      Accept: "application/json",
     },
   });
 
@@ -88,14 +92,14 @@ export async function fetchGitHubUser(accessToken: string): Promise<GitHubUser> 
 
 /**
  * Fetch primary email from GitHub (for users with private emails)
- * 
+ *
  * Reference: https://docs.github.com/en/rest/users/emails#list-email-addresses-for-the-authenticated-user
  */
 async function fetchPrimaryEmail(accessToken: string): Promise<string | null> {
   const response = await fetch(githubOAuthConfig.userEmailsUrl, {
     headers: {
-      'Authorization': `Bearer ${accessToken}`,
-      'Accept': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+      Accept: "application/json",
     },
   });
 
@@ -104,7 +108,40 @@ async function fetchPrimaryEmail(accessToken: string): Promise<string | null> {
   }
 
   const emails = await response.json();
-  const primary = emails.find((e: { primary: boolean; email: string }) => e.primary);
-  
+  const primary = emails.find(
+    (e: { primary: boolean; email: string }) => e.primary
+  );
+
   return primary?.email || emails[0]?.email || null;
+}
+
+/**
+ * Create or update user in database from GitHub OAuth data
+ * 
+ * - Creates new user if not exists (by oauthProvider + oauthId)
+ * - Updates existing user's profile data on login
+ */
+export async function findOrCreateGitHubUser(githubUser: GitHubUser): Promise<User> {
+  const user = await prisma.user.upsert({
+    where: {
+      oauthProvider_oauthId: {
+        oauthProvider: 'github',
+        oauthId: String(githubUser.id),
+      },
+    },
+    update: {
+      email: githubUser.email || undefined,
+      name: githubUser.name,
+      avatarUrl: githubUser.avatar_url,
+    },
+    create: {
+      email: githubUser.email || `${githubUser.id}@github.oauth`,
+      name: githubUser.name,
+      avatarUrl: githubUser.avatar_url,
+      oauthProvider: 'github',
+      oauthId: String(githubUser.id),
+    },
+  });
+
+  return user;
 }

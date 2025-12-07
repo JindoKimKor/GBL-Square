@@ -4,7 +4,11 @@ import {
   createErrorRedirect,
   createSuccessRedirect,
 } from "@/lib/auth/utils";
-import { exchangeCodeForToken, fetchGitHubUser } from "@/lib/auth/github";
+import {
+  exchangeCodeForToken,
+  fetchGitHubUser,
+  findOrCreateGitHubUser,
+} from "@/lib/auth/github";
 
 /**
  * GitHub OAuth Callback Handler
@@ -30,11 +34,13 @@ export async function GET(request: NextRequest) {
     // Task #52: Fetch user data from GitHub
     const githubUser = await fetchGitHubUser(accessToken);
 
-    // TODO: Task #53 - Create/update user in DB
+    // Task #53: Create or update user in database
+    const user = await findOrCreateGitHubUser(githubUser);
+
     // TODO: Task #54 - Generate JWT
 
     // Temporary: log user data
-    console.log("GitHub user:", githubUser);
+    console.log("User saved:", user);
 
     return createSuccessRedirect(request, "/?auth=success");
   } catch (err) {
