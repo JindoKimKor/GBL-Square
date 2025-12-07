@@ -1,14 +1,11 @@
-import { NextRequest } from "next/server";
-import {
-  extractOAuthParams,
-  createErrorRedirect,
-  createSuccessRedirect,
-} from "@/lib/auth/utils";
+import { NextRequest, NextResponse } from "next/server";
+import { extractOAuthParams, createErrorRedirect } from "@/lib/auth/utils";
 import {
   exchangeCodeForToken,
   fetchGitHubUser,
   findOrCreateGitHubUser,
 } from "@/lib/auth/github";
+import { generateToken } from "@/lib/auth/jwt";
 
 /**
  * GitHub OAuth Callback Handler
@@ -28,21 +25,33 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // Task #51: Exchange code for access token
     const accessToken = await exchangeCodeForToken(code);
-
-    // Task #52: Fetch user data from GitHub
     const githubUser = await fetchGitHubUser(accessToken);
-
-    // Task #53: Create or update user in database
     const user = await findOrCreateGitHubUser(githubUser);
 
-    // TODO: Task #54 - Generate JWT
+    // Task #54: Generate JWT and set cookie
+    const token = generateToken({
+      userId: user.id,
+      email: user.email,
+    });
 
-    // Temporary: log user data
-    console.log("User saved:", user);
+    // Create response with redirect
+    const response = NextResponse.redirect(
+      new URL("/?auth=success", request.url)
+    );
 
-    return createSuccessRedirect(request, "/?auth=success");
+    // Set HttpOnly cookie
+    response.cookies.set("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60, // 1 minute for testing
+      path: "/",
+    });
+
+    console.log("JWT token set in cookie");
+
+    return response;
   } catch (err) {
     console.error("OAuth error:", err);
     return createErrorRedirect(request, "token_exchange_failed");
