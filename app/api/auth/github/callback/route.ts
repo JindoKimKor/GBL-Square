@@ -4,6 +4,7 @@ import {
   createErrorRedirect,
   createSuccessRedirect,
 } from "@/lib/auth/utils";
+import { exchangeCodeForToken } from "@/lib/auth/github";
 
 /**
  * GitHub OAuth Callback Handler
@@ -12,24 +13,30 @@ import {
  * Reference: https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#2-users-are-redirected-back-to-your-site-by-github
  */
 export async function GET(request: NextRequest) {
-  // Extract OAuth parameters (common logic)
   const { code, error } = extractOAuthParams(request);
 
-  // Handle OAuth errors (e.g., user denied access)
   if (error) {
     return createErrorRedirect(request, error);
   }
 
-  // Validate code exists
   if (!code) {
     return createErrorRedirect(request, "missing_code");
   }
 
-  // TODO: Exchange code for access token (Task #51)
-  // TODO: Fetch user data (Task #52)
-  // TODO: Create/update user in DB (Task #53)
-  // TODO: Generate JWT and set cookie (Task #54)
+  try {
+    // Task #51: Exchange code for access token
+    const accessToken = await exchangeCodeForToken(code);
 
-  // Temporary: redirect to home with success indicator
-  return createSuccessRedirect(request, "/?auth=success");
+    // TODO: Task #52 - Fetch user data
+    // TODO: Task #53 - Create/update user in DB
+    // TODO: Task #54 - Generate JWT
+
+    // Temporary: log token and redirect
+    console.log("Access token received:", accessToken.substring(0, 10) + "...");
+
+    return createSuccessRedirect(request, "/?auth=success");
+  } catch (err) {
+    console.error("OAuth error:", err);
+    return createErrorRedirect(request, "token_exchange_failed");
+  }
 }
