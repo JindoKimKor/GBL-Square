@@ -1,4 +1,5 @@
 import { githubOAuthConfig } from "./config";
+import { GitHubUser } from './types';
 
 /**
  * Generate the URL to redirect users to GitHub OAuth authorization page
@@ -49,4 +50,61 @@ export async function exchangeCodeForToken(code: string): Promise<string> {
   }
 
   return data.access_token;
+}
+
+/**
+ * Fetch authenticated user data from GitHub API
+ * 
+ * Reference: https://docs.github.com/en/rest/users/users#get-the-authenticated-user
+ */
+export async function fetchGitHubUser(accessToken: string): Promise<GitHubUser> {
+  const response = await fetch(githubOAuthConfig.userApiUrl, {
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      'Accept': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch user: ${response.status}`);
+  }
+
+  const user = await response.json();
+
+  // If email is null, fetch from /user/emails endpoint
+  let email = user.email;
+  if (!email) {
+    email = await fetchPrimaryEmail(accessToken);
+  }
+
+  return {
+    id: user.id,
+    login: user.login,
+    email: email,
+    avatar_url: user.avatar_url,
+    name: user.name,
+  };
+}
+
+/**
+ * Fetch primary email from GitHub (for users with private emails)
+ * 
+ * Reference: https://docs.github.com/en/rest/users/emails#list-email-addresses-for-the-authenticated-user
+ */
+async function fetchPrimaryEmail(accessToken: string): Promise<string | null> {
+  const response = await fetch(githubOAuthConfig.userEmailsUrl, {
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      'Accept': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    return null;
+  }
+
+  const emails = await response.json();
+  const primary = emails.find((e: { primary: boolean; email: string }) => e.primary);
+  
+  return primary?.email || emails[0]?.email || null;
 }
