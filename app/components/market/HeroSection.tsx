@@ -46,7 +46,7 @@ export default function HeroSection() {
   const handleOAuthLogin = (provider: string) => {
     switch (provider) {
       case "GH":
-        window.location.href = getGitHubAuthUrl();
+        window.location.href = "/api/auth/github";
         break;
       // case "GL":
       // case "BB":
