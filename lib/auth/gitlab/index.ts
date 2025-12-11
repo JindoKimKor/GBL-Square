@@ -17,3 +17,6 @@ export function getGitLabAuthUrl(): string {
   return `${gitlabOAuthConfig.authorizationUrl}?${params.toString()}`;
 }
 
+// TODO: Task #59 - Add exchangeCodeForToken()
+// TODO: Task #60 - Add fetchGitLabUser()
+// TODO: Task #61 - Add findOrCreateGitLabUser()
