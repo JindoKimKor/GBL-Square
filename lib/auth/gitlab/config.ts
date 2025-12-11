@@ -5,6 +5,9 @@
  * - OAuth Flow: https://docs.gitlab.com/ee/api/oauth2.html
  * - Scopes: https://docs.gitlab.com/ee/integration/oauth_provider.html#authorized-applications
  * - User API: https://docs.gitlab.com/ee/api/users.html#for-user
+ *
+ * Note: Unlike GitHub, GitLab's /user endpoint always includes email in the response,
+ * so a separate emails API endpoint is not needed.
  */
 export const gitlabOAuthConfig = {
   clientId: process.env.GITLAB_CLIENT_ID!,
