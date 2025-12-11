@@ -1,5 +1,7 @@
 import { gitlabOAuthConfig } from "./config";
 import { GitLabUser } from "./types";
+import { prisma } from "@/lib/prisma";
+import { User } from "@prisma/client";
 
 /**
  * Generate the URL to redirect users to GitLab OAuth authorization page
@@ -100,4 +102,40 @@ export async function fetchGitLabUser(
   };
 }
 
-// TODO: Task #61 - Add findOrCreateGitLabUser()
+/**
+ * Create or update user in database from GitLab OAuth data
+ *
+ * Task #61: Create or update User record for GitLab
+ *
+ * Uses Prisma's upsert to either:
+ * - Create a new user if this is their first login
+ * - Update existing user's profile data on subsequent logins
+ *
+ * Users are uniquely identified by (oauthProvider + oauthId).
+ */
+export async function findOrCreateGitLabUser(gitlabUser: GitLabUser): Promise<User> {
+  const user = await prisma.user.upsert({
+    where: {
+      oauthProvider_oauthId: {
+        oauthProvider: 'gitlab',
+        oauthId: String(gitlabUser.id),
+      },
+    },
+    update: {
+      // Update profile data on each login
+      email: gitlabUser.email || undefined,
+      name: gitlabUser.name,
+      avatarUrl: gitlabUser.avatar_url,
+    },
+    create: {
+      // Create new user on first login
+      email: gitlabUser.email || `${gitlabUser.id}@gitlab.oauth`,
+      name: gitlabUser.name,
+      avatarUrl: gitlabUser.avatar_url,
+      oauthProvider: 'gitlab',
+      oauthId: String(gitlabUser.id),
+    },
+  });
+
+  return user;
+}
