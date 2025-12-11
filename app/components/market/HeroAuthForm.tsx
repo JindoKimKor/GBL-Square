@@ -53,6 +53,9 @@ export default function HeroAuthForm({ ctaButtonText }: HeroAuthFormProps) {
       case "GH":
         window.location.href = "/api/auth/github";
         break;
+      case "GL":
+        window.location.href = "/api/auth/gitlab";
+        break;
       default:
         console.log(`${provider} OAuth not implemented yet`);
     }

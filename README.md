@@ -1,5 +1,6 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+
 ## Getting Started
 
 First, install the dependencies:
@@ -46,3 +47,41 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## OAuth Setup
+
+### GitHub OAuth
+
+GitHub OAuth is already configured and working.
+
+### GitLab OAuth Setup
+
+Added GitLab OAuth as an additional sign-in option for users.
+
+**GitLab OAuth Application Registration**
+
+Registered at: https://gitlab.com/-/profile/applications
+
+Application settings:
+- **Application name:** `GBL-Square`
+- **Redirect URI:** `http://localhost:3000/api/auth/gitlab/callback`
+- **Confidential:** ✓
+- **Scopes:** `read_user`
+
+**Credentials**
+
+GitLab provided the Application ID and Secret upon registration.
+
+**Environment Variables**
+
+Added the credentials to `.env`:
+
+```bash
+GITLAB_CLIENT_ID=<application_id>
+GITLAB_CLIENT_SECRET=<secret>
+```
+
+**Configuration File**
+
+Created `lib/auth/gitlab/config.ts` with OAuth endpoints and settings.
+
