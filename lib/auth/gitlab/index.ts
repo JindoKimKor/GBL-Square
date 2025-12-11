@@ -1,4 +1,5 @@
 import { gitlabOAuthConfig } from "./config";
+import { GitLabUser } from "./types";
 
 /**
  * Generate the URL to redirect users to GitLab OAuth authorization page
@@ -61,5 +62,42 @@ export async function exchangeCodeForToken(code: string): Promise<string> {
   return data.access_token;
 }
 
-// TODO: Task #60 - Add fetchGitLabUser()
+/**
+ * Fetch authenticated user data from GitLab API
+ *
+ * Task #60: Fetch user data from GitLab API
+ *
+ * Uses the access token to retrieve the authenticated user's profile
+ * information from GitLab. Unlike GitHub, GitLab includes email directly
+ * in the user endpoint response.
+ *
+ * Reference: https://docs.gitlab.com/ee/api/users.html#for-user
+ */
+export async function fetchGitLabUser(
+  accessToken: string
+): Promise<GitLabUser> {
+  const response = await fetch(gitlabOAuthConfig.userApiUrl, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      Accept: "application/json",
+    },
+  });
+
+  // Handle API request failures
+  if (!response.ok) {
+    throw new Error(`Failed to fetch user: ${response.status}`);
+  }
+
+  const user = await response.json();
+
+  // Extract and normalize user data structure
+  return {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    avatar_url: user.avatar_url,
+    name: user.name,
+  };
+}
+
 // TODO: Task #61 - Add findOrCreateGitLabUser()

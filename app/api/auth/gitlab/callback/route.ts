@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { extractOAuthParams, createErrorRedirect } from "@/lib/auth/utils";
-import { exchangeCodeForToken } from "@/lib/auth/gitlab";
+import { exchangeCodeForToken, fetchGitLabUser } from "@/lib/auth/gitlab";
 
 /**
  * GitLab OAuth Callback Handler
  *
- * Task #58-59: Create callback endpoint and implement token exchange
+ * Task #58-60: Create callback endpoint, token exchange, and user data fetch
  *
  * This endpoint receives the OAuth redirect from GitLab after user authorization.
  * GitLab redirects to: /api/auth/gitlab/callback?code=AUTHORIZATION_CODE
@@ -31,14 +31,21 @@ export async function GET(request: NextRequest) {
     // Task #59: Exchange authorization code for access token
     const accessToken = await exchangeCodeForToken(code);
 
+    // Task #60: Fetch user data from GitLab API
+    const gitlabUser = await fetchGitLabUser(accessToken);
+
     // Remaining tasks:
-    // - Task #60: Fetch user data from GitLab API
     // - Task #61: Save/update user in database
     // - Task #62: Generate JWT and redirect to home
 
     return NextResponse.json({
-      message: "Token exchange successful",
-      tokenPreview: accessToken.substring(0, 10) + "..."
+      message: "User data fetched successfully",
+      user: {
+        id: gitlabUser.id,
+        username: gitlabUser.username,
+        email: gitlabUser.email,
+        name: gitlabUser.name
+      }
     });
   } catch (err) {
     // Handle token exchange errors (network, invalid code, etc.)
