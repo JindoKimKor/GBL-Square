@@ -56,6 +56,8 @@ export default function HeroAuthForm({ ctaButtonText }: HeroAuthFormProps) {
       case "GL":
         window.location.href = "/api/auth/gitlab";
         break;
+      case "BB":
+        window.location.href = "/api/auth/bitbucket";
       default:
         console.log(`${provider} OAuth not implemented yet`);
     }
@@ -68,9 +70,7 @@ export default function HeroAuthForm({ ctaButtonText }: HeroAuthFormProps) {
   if (user) {
     return (
       <div className="mt-10">
-        <p className="text-2xl font-semibold text-gray-800">
-          Welcome back, {user.name || user.email}!
-        </p>
+        <p className="text-2xl font-semibold text-gray-800">Welcome back, {user.name || user.email}!</p>
       </div>
     );
   }
