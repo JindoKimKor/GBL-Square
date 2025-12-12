@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
 /**
  * Extract and validate OAuth callback parameters
@@ -7,11 +7,13 @@ import { NextRequest, NextResponse } from 'next/server';
 export function extractOAuthParams(request: NextRequest): {
   code: string | null;
   error: string | null;
+  state: string | null;
 } {
   const searchParams = request.nextUrl.searchParams;
   return {
-    code: searchParams.get('code'),
-    error: searchParams.get('error'),
+    code: searchParams.get("code"),
+    error: searchParams.get("error"),
+    state: searchParams.get("state"),
   };
 }
 
@@ -19,12 +21,10 @@ export function extractOAuthParams(request: NextRequest): {
  * Create error redirect response
  */
 export function createErrorRedirect(
-  request: NextRequest, 
+  request: NextRequest,
   error: string
 ): NextResponse {
-  return NextResponse.redirect(
-    new URL(`/?error=${error}`, request.url)
-  );
+  return NextResponse.redirect(new URL(`/?error=${error}`, request.url));
 }
 
 /**
@@ -32,7 +32,7 @@ export function createErrorRedirect(
  */
 export function createSuccessRedirect(
   request: NextRequest,
-  path: string = '/'
+  path: string = "/"
 ): NextResponse {
   return NextResponse.redirect(new URL(path, request.url));
 }

@@ -1,17 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
-import { exchangeCodeForToken, fetchBitbucketUser, findOrCreateBitbucketUser } from "@/lib/auth/bitbucket";
+import {
+  exchangeCodeForToken,
+  fetchBitbucketUser,
+  findOrCreateBitbucketUser,
+} from "@/lib/auth/bitbucket";
 import { generateToken } from "@/lib/auth/jwt";
+import { extractOAuthParams, createErrorRedirect } from "@/lib/auth/utils";
 
 export async function GET(request: NextRequest) {
-  const { searchParams } = request.nextUrl;
-  const code = searchParams.get("code");
-  const error = searchParams.get("error");
-  const state = searchParams.get("state");
+  const { code, error, state } = extractOAuthParams(request);
   const storedState = request.cookies.get("oauth_state")?.value;
 
   if (error || !code || !state || state !== storedState) {
     const errorType = error || (!code ? "missing_code" : "invalid_state");
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}/auth/error?error=${errorType}`);
+    return createErrorRedirect(request, errorType);
   }
 
   try {
@@ -24,13 +26,14 @@ export async function GET(request: NextRequest) {
       email: user.email,
     });
 
-    const response = NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}/`);
+    const response = NextResponse.redirect(new URL("/", request.url));
 
-    response.cookies.set("bitbucket_session", sessionToken, {
+    response.cookies.set("token", sessionToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 7, // 7 days
+      maxAge: 60, // 1 minute for test
+      path: "/",
     });
 
     response.cookies.delete("oauth_state");
@@ -38,6 +41,6 @@ export async function GET(request: NextRequest) {
     return response;
   } catch (err) {
     console.error("OAuth callback error:", err);
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}/auth/error?error=authentication_failed`);
+    return createErrorRedirect(request, "authentication_failed");
   }
 }
